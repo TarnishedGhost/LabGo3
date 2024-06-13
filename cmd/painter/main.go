@@ -10,15 +10,14 @@ import (
 
 func main() {
 	var (
-		pv ui.Visualizer // Візуалізатор створює вікно та малює у ньому.
+		pv ui.Visualizer
 
-		// Потрібні для частини 2.
-		opLoop painter.Loop // Цикл обробки команд.
-		parser lang.Parser  // Парсер команд.
+		opLoop painter.Loop
+		parser lang.Parser
 	)
 
 	//pv.Debug = true
-	pv.Title = "Simple painter"
+	pv.Title = "Painter 30"
 
 	pv.OnScreenReady = opLoop.Start
 	opLoop.Receiver = &pv
