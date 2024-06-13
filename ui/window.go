@@ -144,11 +144,12 @@ func (pw *Visualizer) drawDefaultUI() {
 	pw.w.Fill(pw.sz.Bounds(), color.RGBA{0, 255, 0, 255}, draw.Src)
 
 	x, y := pw.center.X, pw.center.Y
+	size := 30
 	clr := color.RGBA{255, 0, 0, 255}
 
-	pw.w.Fill(image.Rect(x-90, y-30, x+90, y+30), clr, draw.Src)
+	pw.w.Fill(image.Rect(x-size*3, y-size, x+size*3, y+size), clr, draw.Src)
 
-	pw.w.Fill(image.Rect(x-30, y-60, x+30, y+60), clr, draw.Src)
+	pw.w.Fill(image.Rect(x-size, y-size*2, x+size, y+size*2), clr, draw.Src)
 
 	for _, br := range imageutil.Border(pw.sz.Bounds(), 10) {
 		pw.w.Fill(br, color.RGBA{0, 255, 0, 255}, draw.Src)
