@@ -96,11 +96,11 @@ func detectTerminate(e any) bool {
 	switch e := e.(type) {
 	case lifecycle.Event:
 		if e.To == lifecycle.StageDead {
-			return true // Window destroy initiated.
+			return true
 		}
 	case key.Event:
 		if e.Code == key.CodeEscape {
-			return true // Esc pressed.
+			return true
 		}
 	}
 	return false
@@ -109,14 +109,14 @@ func detectTerminate(e any) bool {
 func (pw *Visualizer) handleEvent(e any, t screen.Texture) {
 	switch e := e.(type) {
 
-	case size.Event: // Оновлення даних про розмір вікна.
+	case size.Event:
 		pw.sz = e
 
 	case error:
 		log.Printf("ERROR: %s", e)
 
 	case mouse.Event:
-		if e.Button != mouse.ButtonRight { // Зміна на праву кнопку
+		if e.Button != mouse.ButtonRight {
 			break
 		}
 		if e.Direction != mouse.DirPress {
@@ -131,11 +131,9 @@ func (pw *Visualizer) handleEvent(e any, t screen.Texture) {
 		}
 
 	case paint.Event:
-		// Малювання контенту вікна.
 		if t == nil {
 			pw.drawDefaultUI()
 		} else {
-			// Використання текстури отриманої через виклик Update.
 			pw.w.Scale(pw.sz.Bounds(), t, t.Bounds(), draw.Src, nil)
 		}
 		pw.w.Publish()
@@ -143,16 +141,14 @@ func (pw *Visualizer) handleEvent(e any, t screen.Texture) {
 }
 
 func (pw *Visualizer) drawDefaultUI() {
-	pw.w.Fill(pw.sz.Bounds(), color.RGBA{0, 255, 0, 255}, draw.Src) // Змінено на білий фон.
+	pw.w.Fill(pw.sz.Bounds(), color.RGBA{0, 255, 0, 255}, draw.Src)
 
 	x, y := pw.center.X, pw.center.Y
-	clr := color.RGBA{255, 0, 0, 255} // Змінено на червоний колір.
+	clr := color.RGBA{255, 0, 0, 255}
 
-	// Перший прямокутник розміщується таким чином, щоб його горизонтальна центральна лінія була пересічена.
-	pw.w.Fill(image.Rect(x-150, y-50, x+150, y+50), clr, draw.Src)
+	pw.w.Fill(image.Rect(x-90, y-30, x+90, y+30), clr, draw.Src)
 
-	//Другий прямокутник розміщується таким чином, щоб його вертикальна центральна лінія була пересічена.
-	pw.w.Fill(image.Rect(x-50, y-100, x+50, y+100), clr, draw.Src)
+	pw.w.Fill(image.Rect(x-30, y-60, x+30, y+60), clr, draw.Src)
 
 	for _, br := range imageutil.Border(pw.sz.Bounds(), 10) {
 		pw.w.Fill(br, color.RGBA{0, 255, 0, 255}, draw.Src)
